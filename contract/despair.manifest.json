@@ -1,0 +1,43 @@
+{
+    "name": "despair",
+    "groups": [],
+    "abi": {
+        "methods": [
+            {
+                "name": "init",
+                "offset": 0,
+                "parameters": [],
+                "returntype": "Boolean",
+                "safe": false
+            },
+            {
+                "name": "hello",
+                "offset": 2,
+                "parameters": [],
+                "returntype": "String",
+                "safe": false
+            },
+            {
+                "name": "_initialize",
+                "offset": 24,
+                "parameters": [],
+                "returntype": "Void",
+                "safe": false
+            }
+        ],
+        "events": []
+    },
+    "permissions": [
+        {
+            "contract": "*",
+            "methods": "*"
+        }
+    ],
+    "trusts": [],
+    "supportedstandards": [],
+    "extra": {
+        "Author": "The Four Blessings of the Apocalypse (COZ)",
+        "Email": "contact@coz.io",
+        "Description": "This smart contract represents the core on-chain infrastructure for the game, despair."
+    }
+}
