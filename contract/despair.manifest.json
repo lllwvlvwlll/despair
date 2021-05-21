@@ -29,16 +29,52 @@
                 "offset": 30,
                 "parameters": [
                     {
-                        "name": "owner",
-                        "type": "Hash160"
+                        "name": "index",
+                        "type": "String"
                     }
                 ],
                 "returntype": "Map",
                 "safe": false
             },
             {
-                "name": "create_land",
+                "name": "claim_bounty",
                 "offset": 101,
+                "parameters": [
+                    {
+                        "name": "owner",
+                        "type": "Hash160"
+                    },
+                    {
+                        "name": "index",
+                        "type": "String"
+                    },
+                    {
+                        "name": "material",
+                        "type": "String"
+                    }
+                ],
+                "returntype": "Boolean",
+                "safe": false
+            },
+            {
+                "name": "get_unclaimed",
+                "offset": 160,
+                "parameters": [
+                    {
+                        "name": "index",
+                        "type": "String"
+                    },
+                    {
+                        "name": "material",
+                        "type": "String"
+                    }
+                ],
+                "returntype": "Integer",
+                "safe": false
+            },
+            {
+                "name": "create_land",
+                "offset": 228,
                 "parameters": [
                     {
                         "name": "owner",
@@ -49,8 +85,20 @@
                 "safe": false
             },
             {
+                "name": "tokensOf",
+                "offset": 290,
+                "parameters": [
+                    {
+                        "name": "owner",
+                        "type": "Hash160"
+                    }
+                ],
+                "returntype": "Array",
+                "safe": false
+            },
+            {
                 "name": "_initialize",
-                "offset": 447,
+                "offset": 725,
                 "parameters": [],
                 "returntype": "Void",
                 "safe": false

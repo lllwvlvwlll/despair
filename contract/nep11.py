@@ -1,10 +1,13 @@
 from typing import Any, Union, List, cast, Dict
 
 from boa3.builtin import CreateNewEvent, NeoMetadata, metadata, public
-from boa3.builtin.interop.binary import deserialize
-from boa3.builtin.interop.runtime import calling_script_hash, check_witness
-from boa3.builtin.interop.storage import get
+from boa3.builtin import NeoMetadata, metadata, public
+from boa3.builtin.interop.storage import delete, get, put
 from boa3.builtin.type import UInt160
+from boa3.builtin.interop.binary import serialize, deserialize
+from boa3.builtin.interop.runtime import get_time
+from boa3.builtin.interop.crypto import sha256
+from typing import Any, Dict, cast
 
 
 # ---------------------------------
@@ -58,28 +61,29 @@ Nep11TransferEvent = CreateNewEvent(
 
 
 @public
-def symbol():
-    return "NFT"
+def symbol() -> str:
+    return "DESP"
 
 
 @public
-def decimals():
+def decimals() -> int:
     return 0
 
 
 @public
-def totalSupply():
-    return get(TOTAL_SUPPLY)
+def totalSupply() -> int:
+    return get(TOTAL_SUPPLY).to_int()
 
 
+# TODO
 @public
-def balanceOf(owner_: UInt160):
+def balanceOf(owner_: UInt160) -> int:
     owner = get(ACCOUNT_PREFIX + owner_)
     assert len(owner) == 20
     ids = cast(List[bytes], deserialize(owner))
     return len(ids)
 
-
+# TODO
 @public
 def tokensOf(owner_: UInt160) -> List[bytes]:
     owner = get(ACCOUNT_PREFIX + owner_)
@@ -87,7 +91,7 @@ def tokensOf(owner_: UInt160) -> List[bytes]:
     ids = cast(List[bytes], deserialize(owner))
     return ids
 
-
+# TODO
 @public
 def transfer(to: UInt160, token_id: bytes, data: Any):
     assert len(to) == 20
@@ -115,8 +119,9 @@ def burn():
 
 
 @public
-def mint():
-    pass
+def mint(owner: UInt160) -> bool:
+    return create_land(owner)
+
 
 
 @public
@@ -141,3 +146,52 @@ def tokens():
 @public
 def properties():
     pass
+
+
+
+
+@public
+def land_get(owner: UInt160) -> dict:
+    land: dict = deserialize(get(owner))
+    return land
+
+@public
+def create_land(owner: UInt160) -> bool:
+
+    total_supply = get(TOTAL_SUPPLY)
+
+    new_land = land_init(total_supply, owner)
+    land_save(new_land)
+
+    put(TOTAL_SUPPLY, total_supply.to_int() + 1)
+    return True
+
+
+def get_seed(total_supply: bytes) -> bytes:
+    return sha256(get_time + total_supply.to_int())
+
+
+def get_rand(seed: int) -> int:
+    # this distribution needs to be a Poisson
+    return seed % 99
+
+
+def land_init(index: bytes, owner: UInt160) -> dict:
+    seed = get_seed(index)
+    land = {
+        "seed": seed,
+        "owner": owner,
+        "index": index.to_int(),
+        "wood": get_rand(seed[0]),
+        "wheat": get_rand(seed[1]),
+        "gold": get_rand(seed[2]),
+        "stone": get_rand(seed[3]),
+        "water": get_rand(seed[4]),
+    }
+    return land
+
+
+def land_save(land: dict) -> bool:
+    owner = cast(UInt160, land["owner"])
+    put(owner, serialize(land))
+    return True

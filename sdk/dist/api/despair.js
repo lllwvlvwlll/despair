@@ -115,7 +115,43 @@ var Despair = /** @class */ (function () {
             });
         });
     };
-    Despair.getLand = function (node, networkMagic, contractHash, address) {
+    /*
+    static async tokensOf(node: string, networkMagic: number, contractHash: string, address: string): Promise<number> {
+      const method = "tokensOf"
+      const params = [
+        sc.ContractParam.hash160(address),
+      ]
+  
+      const res = await NeoInterface.TestInvoke(node, networkMagic, contractHash, method, params )
+      if (res === undefined || res.length === 0) {
+        throw new Error("unrecognized response")
+      }
+      return parseInt(res[0].value as string)
+    }
+     */
+    Despair.getUnclaimed = function (node, networkMagic, contractHash, index, material) {
+        return __awaiter(this, void 0, void 0, function () {
+            var method, params, res;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        method = "get_unclaimed";
+                        params = [
+                            neon_js_1.sc.ContractParam.string(index),
+                            neon_js_1.sc.ContractParam.string(material)
+                        ];
+                        return [4 /*yield*/, interface_1.NeoInterface.TestInvoke(node, networkMagic, contractHash, method, params)];
+                    case 1:
+                        res = _a.sent();
+                        if (res === undefined || res.length === 0) {
+                            return [2 /*return*/, undefined];
+                        }
+                        return [2 /*return*/, parseInt(res[0].value)];
+                }
+            });
+        });
+    };
+    Despair.getLand = function (node, networkMagic, contractHash, index) {
         return __awaiter(this, void 0, void 0, function () {
             var method, params, res, land;
             return __generator(this, function (_a) {
@@ -123,7 +159,7 @@ var Despair = /** @class */ (function () {
                     case 0:
                         method = "land_get";
                         params = [
-                            neon_js_1.sc.ContractParam.hash160(address),
+                            neon_js_1.sc.ContractParam.string(index)
                         ];
                         return [4 /*yield*/, interface_1.NeoInterface.TestInvoke(node, networkMagic, contractHash, method, params)];
                     case 1:
@@ -142,6 +178,25 @@ var Despair = /** @class */ (function () {
                             }
                         });
                         return [2 /*return*/, land];
+                }
+            });
+        });
+    };
+    Despair.claimBounty = function (node, networkMagic, contractHash, index, material, account) {
+        return __awaiter(this, void 0, void 0, function () {
+            var method, params;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        method = "claim_bounty";
+                        params = [
+                            neon_js_1.sc.ContractParam.hash160(account.address),
+                            neon_js_1.sc.ContractParam.string(index),
+                            neon_js_1.sc.ContractParam.string(material)
+                        ];
+                        console.log(params[0].value);
+                        return [4 /*yield*/, interface_1.NeoInterface.publishInvoke(node, networkMagic, contractHash, method, params, account)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });

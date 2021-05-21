@@ -35,10 +35,38 @@ export class Despair {
     return parseInt(res[0].value as string)
   }
 
-  static async getLand(node: string, networkMagic: number, contractHash: string, address: string): Promise<{ [key: string]: any } | undefined> {
-    const method = "land_get"
+  /*
+  static async tokensOf(node: string, networkMagic: number, contractHash: string, address: string): Promise<number> {
+    const method = "tokensOf"
     const params = [
       sc.ContractParam.hash160(address),
+    ]
+
+    const res = await NeoInterface.TestInvoke(node, networkMagic, contractHash, method, params )
+    if (res === undefined || res.length === 0) {
+      throw new Error("unrecognized response")
+    }
+    return parseInt(res[0].value as string)
+  }
+   */
+  static async getUnclaimed(node: string, networkMagic: number, contractHash: string, index: string, material: string): Promise<number | undefined> {
+    const method = "get_unclaimed"
+    const params = [
+      sc.ContractParam.string(index),
+      sc.ContractParam.string(material)
+    ]
+
+    const res = await NeoInterface.TestInvoke(node, networkMagic, contractHash, method, params )
+    if (res === undefined || res.length === 0) {
+      return undefined
+    }
+    return parseInt(res[0].value as string)
+  }
+
+  static async getLand(node: string, networkMagic: number, contractHash: string, index: string): Promise<{ [key: string]: any } | undefined> {
+    const method = "land_get"
+    const params = [
+      sc.ContractParam.string(index)
       ]
 
     const res = await NeoInterface.TestInvoke(node, networkMagic, contractHash, method, params)
@@ -60,16 +88,27 @@ export class Despair {
     return land
   }
 
+  static async claimBounty(node: string, networkMagic: number, contractHash: string, index: string, material: string, account: wallet.Account): Promise<any> {
+    const method = "claim_bounty"
+
+    const params = [
+      sc.ContractParam.hash160(account.address),
+      sc.ContractParam.string(index),
+      sc.ContractParam.string(material)
+    ]
+    console.log(params[0].value)
+    return await NeoInterface.publishInvoke(node, networkMagic, contractHash, method, params, account )
+  }
+
   static async createLand(node: string, networkMagic: number, contractHash: string, address: string, account: wallet.Account): Promise<any> {
     const method = "create_land"
 
     const params = [
       sc.ContractParam.hash160(address),
     ]
-
-
     return await NeoInterface.publishInvoke(node, networkMagic, contractHash, method, params, account )
-
   }
+
+
 
 }
