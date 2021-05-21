@@ -10,24 +10,24 @@
         "name": "node1",
         "accounts": [
           {
-            "private-key": "d0fceb231236abe288a4051d03b282294eb49469533722b9f21ab7bdf4639110",
-            "script-hash": "NWSoQ4eRnREsVD8DbrdhLyg7tuEsBVsqbn",
+            "private-key": "c741e7d80e381bee831a3b182c3fcb7dddeede913323d5ae0b42959f01087ad8",
+            "script-hash": "NYCscAzKeJz1LfsAuR28DMMMyHX1ebHufu",
             "label": null,
             "is-default": true,
             "contract": {
-              "script": "0c21037e8a3723cceebf972f46bfd598e8658c217363f88c25639d393e0ad8c966769f41747476aa",
+              "script": "0c2102e10decdce609014201d38568e1b51c3f8df96b07172b17b08796a3cbabef6cdc4156e7b327",
               "parameters": [
                 "Signature"
               ]
             }
           },
           {
-            "private-key": "d0fceb231236abe288a4051d03b282294eb49469533722b9f21ab7bdf4639110",
-            "script-hash": "NVg36KZppR8CN74fE6CbrvwSd8c1SQS9Jf",
+            "private-key": "c741e7d80e381bee831a3b182c3fcb7dddeede913323d5ae0b42959f01087ad8",
+            "script-hash": "Nj6XACEsp4zcWfZvPAJePj2AfHrzTUdn1r",
             "label": "Consensus MultiSigContract",
             "is-default": false,
             "contract": {
-              "script": "110c21037e8a3723cceebf972f46bfd598e8658c217363f88c25639d393e0ad8c966769f11417bce6ca5",
+              "script": "110c2102e10decdce609014201d38568e1b51c3f8df96b07172b17b08796a3cbabef6cdc11419ed0dc3a",
               "parameters": [
                 "Signature"
               ]
@@ -37,6 +37,41 @@
       }
     }
   ],
-  "wallets": [],
+  "wallets": [
+    {
+      "name": "despairA",
+      "accounts": [
+        {
+          "private-key": "0799e612c9ee2bc8a7eab43ba5154caf5a26f27ded2525719a7c31e6d3f13ce0",
+          "script-hash": "NWRycLtcAcxnzPkx2xSJTLnQ4yV4VZxjAj",
+          "label": null,
+          "is-default": true,
+          "contract": {
+            "script": "0c21028d5832d51ce1be55a87f5b4a6165375afd904c75c5ab9aa65351dc55c52284554156e7b327",
+            "parameters": [
+              "Signature"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "despairB",
+      "accounts": [
+        {
+          "private-key": "46f20119aae10ad7eb6d4a8e057fca25cfaf2223ac7ed5b1358c56de7b88e314",
+          "script-hash": "NaPDay3VWQYP7qEiLKjzocV2Ed1EkJm6Qs",
+          "label": null,
+          "is-default": true,
+          "contract": {
+            "script": "0c210209b1673c2bdaa78682bea698a30350bed663e3acbbbd019dc70c7b78edd011804156e7b327",
+            "parameters": [
+              "Signature"
+            ]
+          }
+        }
+      ]
+    }
+  ],
   "settings": {}
 }
